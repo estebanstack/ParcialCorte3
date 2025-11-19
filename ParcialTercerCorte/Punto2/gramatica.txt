@@ -134,7 +134,7 @@ RLS2   → "," R RLS3
          }
          
 
-// Una FILA es una lista de números: [1,2,3]
+// Una FILA es una lista de numeros: [1,2,3]
 R      → "[" NL "]"
          {
            R.filas = 1;          
@@ -142,7 +142,7 @@ R      → "[" NL "]"
            R.trad  = "[" || NL.trad || "]";
          }
 
-// NL: lista de números en una fila
+// NL: lista de numeros en una fila
 NL     → num NLR
          {
            NL.count = 1 + NLR.count;
