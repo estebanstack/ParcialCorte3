@@ -1,40 +1,7 @@
-# Compilador de Multiplicación de Matrices con ANTLR
-
+# Punto 3
 ## Descripción
 
-Este proyecto implementa un **compilador completo** para un lenguaje de programación diseñado específicamente para realizar el **producto punto entre dos matrices de diferentes dimensiones**. Utiliza ANTLR4 para el análisis léxico y sintáctico, y genera código Python ejecutable que realiza las operaciones matriciales.
-
-## Características Principales
-
-- ✅ **Análisis léxico y sintáctico con ANTLR4**
-- ✅ **Declaración de matrices literales** con sintaxis intuitiva
-- ✅ **Producto matricial** usando el operador `*`
-- ✅ **Verificación semántica de dimensiones** en tiempo de compilación
-- ✅ **Generación de código Python** optimizado
-- ✅ **Ejecución automática** del código generado
-- ✅ **Tabla de símbolos** para rastreo de variables y dimensiones
-
-## Arquitectura del Compilador
-
-```
-Código Fuente (.txt)
-        ↓
-MatricesLexer (ANTLR)  ← Matrices.g4
-        ↓
-  Tokens Stream
-        ↓
-MatricesParser (ANTLR) ← Matrices.g4
-        ↓
-   Árbol Sintáctico (AST)
-        ↓
-EvalVisitor (Visitor Pattern)
-        ↓
-  Código Python Generado
-        ↓
-   exec() - Ejecución
-        ↓
-    Resultado
-```
+Este punto implementa un **compilador completo** para un lenguaje de programación diseñado específicamente para realizar el **producto punto entre dos matrices de diferentes dimensiones**. Utiliza ANTLR4 para el análisis léxico y sintáctico, y genera código Python ejecutable que realiza las operaciones matriciales.
 
 ## Archivos del Proyecto
 
@@ -53,18 +20,6 @@ EvalVisitor (Visitor Pattern)
 
 ```bash
 pip install antlr4-python3-runtime
-```
-
-### Instalación de ANTLR4
-
-1. Descarga ANTLR4:
-```bash
-wget https://www.antlr.org/download/antlr-4.13.1-complete.jar
-```
-
-2. Configura el alias (Linux/Mac):
-```bash
-alias antlr4='java -jar /path/to/antlr-4.13.1-complete.jar'
 ```
 
 ### Generación del Lexer y Parser
@@ -188,7 +143,7 @@ if left_meta["cols"] != right_meta["rows"]:
     raise Exception("Dimensiones incompatibles para producto matricial")
 ```
 
-**Ejemplo de error:**
+**Ejemplo de error:**matrix_lang_readme(1)
 ```
 matrix A = [[1,2,3]];      // 1×3
 matrix B = [[4,5]];        // 1×2
@@ -213,7 +168,7 @@ matrix A = [[1,2,3], [4,5]];  // ERROR: filas inconsistentes
 
 ```python
 matrix A = [[1,2],[3,4]];
-matrix B = [[5,6],[7,8]];
+matrix B = [[5,6],[7,8]];matrix_lang_readme(1)
 matrix C = A * B;
 ```
 
@@ -228,7 +183,7 @@ C = [[19, 22], [43, 50]]
 matrix A = [[1,2,3],[4,5,6]];
 matrix B = [[7,8],[9,10],[11,12]];
 matrix C = A * B;
-```
+```matrix_lang_readme(1)
 
 **Resultado:**
 ```
@@ -303,61 +258,6 @@ exec(python_code, namespace)
 print(namespace["C"])
 ```
 
-## Extensiones Implementables
+## Prueba de ejecucion
 
-- [ ] **Suma y resta de matrices** (`A + B`, `A - B`)
-- [ ] **Transposición** (`A.T`)
-- [ ] **Determinante** (`det(A)`)
-- [ ] **Inversión de matrices** (`inv(A)`)
-- [ ] **Multiplicación por escalar** (`2 * A`)
-- [ ] **Potencia de matrices** (`A ** n`)
-- [ ] **Concatenación** (`hstack(A, B)`, `vstack(A, B)`)
-- [ ] **Slicing** (`A[0:2, 1:3]`)
-- [ ] **Funciones matemáticas** (`sin(A)`, `exp(A)`)
-- [ ] **Salida a archivo** (exportar código Python generado)
-
-## Ventajas de Esta Implementación
-
-✅ **Compilación completa**: De código fuente a ejecución
-✅ **Verificación estática**: Errores detectados antes de ejecutar
-✅ **Código limpio**: Python idiomático generado
-✅ **Extensible**: Fácil agregar nuevas operaciones
-✅ **Educativo**: Ejemplo claro de compilador con ANTLR
-
-## Estructura de Directorios Recomendada
-
-```
-proyecto/
-│
-├── Matrices.g4           # Gramática ANTLR
-├── EvalVisitor.py        # Visitor personalizado
-├── Main.py               # Programa principal
-│
-├── generated/            # Archivos generados por ANTLR
-│   ├── MatricesLexer.py
-│   ├── MatricesParser.py
-│   └── MatricesVisitor.py
-│
-├── tests/                # Casos de prueba
-│   ├── test_basic.py
-│   └── test_errors.py
-│
-└── README.md            # Este archivo
-```
-
-## Contribuciones
-
-Para agregar nuevas características:
-
-1. Modifica `Matrices.g4` con las nuevas reglas
-2. Regenera el parser: `antlr4 -Dlanguage=Python3 -visitor Matrices.g4`
-3. Actualiza `EvalVisitor.py` con los nuevos métodos `visit*`
-4. Agrega pruebas en `tests/`
-
-## Autor
-
-Implementación de compilador con ANTLR4 para el curso de Compiladores.
-
----
-
-**Nota**: Este proyecto demuestra el ciclo completo de compilación: análisis léxico, sintáctico, semántico, generación de código y ejecución.
+<img width="564" height="344" alt="image" src="https://github.com/user-attachments/assets/79aec53d-d9a6-4c4c-bda5-c773c2c24a51" />
