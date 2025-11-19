@@ -144,4 +144,4 @@ Construir intérpretes o traductores
 
 ## Conclusión
 
-Esta función formaliza completamente la gramática de un lenguaje CRUD y la retorna como estructura de datos, siguiendo la notación académica vista en clase. Es la base para análisis sintáctico, generación de código o construcción de lenguajes más complejos.
+Esta función formaliza completamente la gramática de un lenguaje CRUD y la retorna como estructura de datos, es la base para análisis sintáctico, generación de código o construcción de lenguajes más complejos.
