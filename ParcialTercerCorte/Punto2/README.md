@@ -1,8 +1,6 @@
-# Lenguaje de Multiplicación de Matrices
+# Punto 2
 
-## Descripción
-
-Este proyecto implementa un compilador para un lenguaje de programación diseñado específicamente para realizar el **producto punto entre dos matrices de diferentes dimensiones**. El lenguaje permite declarar matrices literales y calcular automáticamente su multiplicación, generando código Python equivalente.
+Este punto implementa un compilador para un lenguaje de programación diseñado específicamente para realizar el **producto punto entre dos matrices de diferentes dimensiones**. El lenguaje permite declarar matrices literales y calcular automáticamente su multiplicación, generando código Python equivalente.
 
 ## Características Principales
 
@@ -82,8 +80,8 @@ C = [[19, 22], [43, 50]]
 ### Verificación de Dimensiones
 
 Para el producto `A * B`:
-- ✅ **Válido**: `cols(A) == filas(B)`
-- ❌ **Error**: Si las dimensiones son incompatibles
+- **Válido**: `cols(A) == filas(B)`
+- **Error**: Si las dimensiones son incompatibles
 
 Ejemplo:
 ```
@@ -92,7 +90,7 @@ matrix B = [[4], [5]];     // 2×1
 matrix C = A * B;          // ERROR: 3 ≠ 2
 ```
 
-### Cálculo de Dimensiones Resultantes
+### Calculo de Dimensiones Resultantes
 
 Cuando `A` es de dimensión `m×n` y `B` es de dimensión `n×p`:
 - La matriz resultado `C = A * B` tendrá dimensión `m×p`
@@ -118,38 +116,6 @@ getCols(nombre)                           # Obtiene columnas de una matriz
 error(mensaje)                            # Reporta error semántico
 ```
 
-## Características Técnicas
 
-### Traducción Dirigida por la Sintaxis
-- **Header automático**: Incluye la función `matmul()` en todo programa
-- **Concatenación de strings**: Usa el operador `||` para construir código
-- **Propagación de atributos**: De hojas hacia la raíz del árbol sintáctico
 
-### Manejo de Errores
-1. **Matriz no declarada**: Uso de variable no definida
-2. **Dimensiones incompatibles**: Violación de la regla del producto matricial
-3. **Sintaxis incorrecta**: Errores de parsing
 
-## Limitaciones
-
-- Solo soporta el operador de multiplicación (`*`)
-- No permite suma, resta u otras operaciones matriciales
-- Las matrices deben ser rectangulares (todas las filas con igual número de columnas)
-- Solo genera código Python (no ejecuta directamente)
-
-## Extensiones Futuras
-
-- [ ] Suma y resta de matrices
-- [ ] Transposición de matrices
-- [ ] Producto elemento a elemento (Hadamard)
-- [ ] Matrices identidad y cero predefinidas
-- [ ] Indexación de elementos individuales
-- [ ] Operaciones con escalares
-
-## Autor
-
-Implementación de una gramática traducida para el curso de Compiladores.
-
----
-
-**Nota**: Este lenguaje es una demostración académica de traducción dirigida por la sintaxis y generación de código para operaciones matriciales.
