@@ -168,7 +168,7 @@ matrix A = [[1,2,3], [4,5]];  // ERROR: filas inconsistentes
 
 ```python
 matrix A = [[1,2],[3,4]];
-matrix B = [[5,6],[7,8]];matrix_lang_readme(1)
+matrix B = [[5,6],[7,8]];
 matrix C = A * B;
 ```
 
