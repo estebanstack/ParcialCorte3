@@ -1,0 +1,65 @@
+P      → S P1
+         { P.trad = S.trad || "\n" || P1.trad }
+       | ε
+         { P.trad = "" }
+
+S      → C { S.trad = C.trad }
+       | R { S.trad = R.trad }
+       | U { S.trad = U.trad }
+       | D { S.trad = D.trad }
+
+C      → "create" id "(" CL ")" "values" "(" VL ")" ";"
+         { C.trad = "INSERT INTO " || id.lexema ||
+                   "(" || CL.trad || ") VALUES (" || VL.trad || ");" }
+
+R      → "read" id "fields" "(" FL ")" W ";" 
+         { R.trad = "SELECT " || FL.trad || " FROM " ||
+                    id.lexema || W.trad || ";" }
+
+U      → "update" id "set" ASG W ";"
+         { U.trad = "UPDATE " || id.lexema ||
+                    " SET " || ASG.trad || W.trad || ";" }
+
+D      → "delete" id W ";"
+         { D.trad = "DELETE FROM " || id.lexema || W.trad || ";" }
+
+W      → "where" id "=" value
+         { W.trad = " WHERE " || id.lexema || " = " || value.lexema }
+       | ε
+         { W.trad = "" }
+         
+// Lista de columnas para create y update         
+CL     → id RCL   
+         { CL.trad = id.lexema || RCL.trad }
+
+// Resto de lista
+RCL    → "," id RCL1
+         { RCL.trad = "," || id.lexema || RCL1.trad }
+       | ε
+         { RCL.trad = "" }
+
+// Lista de valores para CREATE
+VL     → value RVL
+         { VL.trad = value.lexema || RVL.trad }
+
+// El resto de los valores con comas
+RVL    → "," value RVL1
+         { RVL.trad = "," || value.lexema || RVL1.trad }
+       | ε
+         { RVL.trad = "" }
+         
+// Lista de campos para select         
+FL     → CL
+         {
+           FL.trad = CL.trad
+         }
+         
+// Lista de asignaciones para update
+ASG    → id "=" value RASG
+         { ASG.trad = id.lexema || " = " || value.lexema || RASG.trad }
+
+RASG   → "," id "=" value RASG1
+         { RASG.trad = ", " || id.lexema || " = " ||
+                        value.lexema || RASG1.trad }
+       | ε
+         { RASG.trad = "" }
