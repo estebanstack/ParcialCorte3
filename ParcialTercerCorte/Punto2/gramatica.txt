@@ -1,0 +1,173 @@
+P      → ST
+         {
+          
+           HEADER = "def matmul(A,B):\n" ||
+                    "    filas = len(A)\n" ||
+                    "    cols  = len(B[0])\n" ||
+                    "    kmax  = len(A[0])\n" ||
+                    "    return [[sum(A[i][k]*B[k][j] for k in range(kmax))\n" ||
+                    "             for j in range(cols)] for i in range(filas)]\n\n";
+
+           P.trad = HEADER || ST.trad;
+         }
+
+
+// SECUENCIA DE SENTENCIAS
+ST     → D ST1
+         {
+           ST.trad = D.trad || "\n" || ST1.trad;
+         }
+       | ε
+         {
+           ST.trad = "";
+         }
+
+ST1    → D ST1
+         {
+           ST1.trad = D.trad || "\n" || ST1.trad;
+         }
+       | ε
+         {
+           ST1.trad = "";
+         }
+
+
+// DECLARACIONES DE MATRICES
+D      → "matrix" id "=" M ";"
+         {
+           nuevoSimbolo(id.lexema,
+                        "matriz",
+                        M.filas,
+                        M.cols);
+
+           D.trad = id.lexema || " = " || M.trad;
+         }
+
+D      → "matrix" id "=" E ";"
+         {
+           nuevoSimbolo(id.lexema,
+                        "matriz",
+                        E.filas,
+                        E.cols);
+
+           // Código: C = matmul(A,B)
+           D.trad = id.lexema || " = " || E.trad;
+         }
+
+
+// EXPRESIONES DE MATRICES
+E      → id
+         {
+           if (!existe(id.lexema)) error("Matriz no declarada");
+
+           E.tipo  = "matriz";
+           E.filas = getFilas(id.lexema);
+           E.cols  = getCols(id.lexema);
+           E.trad  = id.lexema;
+         }
+
+E      → M
+         {
+           E.tipo  = M.tipo;
+           E.filas = M.filas;
+           E.cols  = M.cols;
+           E.trad  = M.trad;
+         }
+
+E      → E1 "*" E2
+         {
+           if (E1.cols != E2.filas)
+               error("Dimensiones incompatibles para producto matricial");
+
+           // Dimensiones de la matriz resultado:
+           E.tipo  = "matriz";
+           E.filas = E1.filas;
+           E.cols  = E2.cols;
+
+           E.trad  = "matmul(" || E1.trad || ", " || E2.trad || ")";
+         }
+
+
+// LITERALES DE MATRIZ
+M      → "[" RLS "]"
+         {
+           M.tipo  = "matriz";
+           M.filas = RLS.filas;
+           M.cols  = RLS.cols;
+           M.trad  = "[" || RLS.trad || "]";
+         }
+
+
+// RLS: lista de filas
+RLS    → R RLS1
+         {
+           // La primera fila ya define el numero de columnas.
+           RLS.filas = 1 + RLS1.filas;
+           RLS.cols  = R.cols;
+           RLS.trad  = R.trad || RLS1.trad;
+         }
+
+RLS1   → "," R RLS2
+         {
+           RLS1.filas = 1 + RLS2.filas;
+           RLS1.cols  = R.cols;
+           RLS1.trad  = "," || R.trad || RLS2.trad;
+         }
+       | ε
+         {
+           RLS1.filas = 0;
+           RLS1.cols  = 0;
+           RLS1.trad  = "";
+         }
+
+RLS2   → "," R RLS3
+         {
+           RLS2.filas = 1 + RLS3.filas;
+           RLS2.cols  = R.cols;
+           RLS2.trad  = "," || R.trad || RLS3.trad;
+         }
+       | ε
+         {
+           RLS2.filas = 0;
+           RLS2.cols  = 0;
+           RLS2.trad  = "";
+         }
+         
+
+// Una FILA es una lista de números: [1,2,3]
+R      → "[" NL "]"
+         {
+           R.filas = 1;          
+           R.cols  = NL.count; 
+           R.trad  = "[" || NL.trad || "]";
+         }
+
+// NL: lista de números en una fila
+NL     → num NLR
+         {
+           NL.count = 1 + NLR.count;
+           NL.trad  = num.lexema || NLR.trad;
+         }
+
+NLR    → "," num NLR1
+         {
+           NLR.count = 1 + NLR1.count;
+           NLR.trad  = "," || num.lexema || NLR1.trad;
+         }
+       | ε
+         {
+           NLR.count = 0;
+           NLR.trad  = "";
+         }
+
+NLR1   → "," num NLR2
+         {
+           NLR1.count = 1 + NLR2.count;
+           NLR1.trad  = "," || num.lexema || NLR2.trad;
+         }
+       | ε
+         {
+           NLR1.count = 0;
+           NLR1.trad  = "";
+         }
+
